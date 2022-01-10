@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class MainSceneController {
+public class mainController {
 
     @FXML
     private TextField tfTitle;
