@@ -71,7 +71,7 @@ public class mainController implements Initializable {
 
     public void confirmDeleteProductModal(ActionEvent event) {
         Product selectedProduct = productTableView.getSelectionModel().getSelectedItem();
-        if(selectedProduct != null) {
+        if(selectedProduct != null && selectedProduct.getAssociatedParts().isEmpty()) {
             Alert alertConfirm = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.OK);
             alertConfirm.setTitle("Are you sure you would like to delete this ");
             alertConfirm.setContentText("Please confirm");
@@ -84,7 +84,12 @@ public class mainController implements Initializable {
             alertConfirm.setTitle("All products have been deleted");
             alertConfirm.setContentText("No remaining products to delete");
             alertConfirm.showAndWait();
-        } else {
+        } else if(selectedProduct.getAssociatedParts().isEmpty() == false) {
+            Alert alertConfirm = new Alert(Alert.AlertType.ERROR, "", ButtonType.OK);
+            alertConfirm.setTitle("Cannot delete product");
+            alertConfirm.setContentText("Please remove associated parts");
+            alertConfirm.showAndWait();
+        }else {
             Alert alertConfirm = new Alert(Alert.AlertType.ERROR, "", ButtonType.OK);
             alertConfirm.setTitle("No product selected");
             alertConfirm.setContentText("Please select a product");

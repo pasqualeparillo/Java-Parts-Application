@@ -1,5 +1,6 @@
 package model;
-import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class Product {
     private int id;
@@ -8,15 +9,15 @@ public class Product {
     private int stock = 0;
     private int min;
     private int max;
-    private ArrayList<Part> associatedParts = new ArrayList<Part>();
+    private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
 
     public Product(int id, String name, double price, int stock, int min, int max) {
-        setID(id);
-        setName(name);
-        setPrice(price);
-        setStock(stock);
-        setMin(min);
-        setMax(max);
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.stock = stock;
+        this.min = min;
+        this.max = max;
     }
 
     /**
@@ -46,9 +47,7 @@ public class Product {
         this.max = max;
     }
 
-    public void setAssociatedParts(ArrayList<Part> associatedParts) {
-        this.associatedParts = associatedParts;
-    }
+    public void setAssociatedParts(Part part){associatedParts.add(part);}
     /**
      * End Create Setters
      */
@@ -79,8 +78,10 @@ public class Product {
         return max;
     }
 
-    public ArrayList<Part> getAssociatedParts() {
-        return associatedParts;
+    public ObservableList<Part> getAssociatedParts(){return associatedParts;}
+
+    public void addAssParts(Part part){
+        associatedParts.add(part);
     }
     /**
      * End Create Getters

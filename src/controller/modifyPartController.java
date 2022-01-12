@@ -97,7 +97,7 @@ public class modifyPartController implements Initializable {
                     try {
                         int partMachineID = Integer.parseInt(addPartChangeable.getText());
                         InHousePart inHousePart = new InHousePart(id, partName, partPrice, partInv, partMin, partMax, partMachineID);
-                        Inventory.addPart(inHousePart);
+                        Inventory.updatePart(selectedPart, inHousePart);
                         returnToHome(event);
                     } catch (Exception e) {
                         generateError("machineIDError");
@@ -107,7 +107,7 @@ public class modifyPartController implements Initializable {
                     String partCompanyName = addPartChangeable.getText();
                     OutSourcedPart outSourcedPart = new OutSourcedPart(id, partName, partPrice, partInv, partMin, partMax, partCompanyName);
                     outSourcedPart.setId(Inventory.generatePartID());
-                    Inventory.addPart(outSourcedPart);
+                    Inventory.updatePart(selectedPart, outSourcedPart);
                     returnToHome(event);
                 }
             }

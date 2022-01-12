@@ -89,15 +89,16 @@ public class Inventory {
     public static int generateProductID() {
         return ++ProductID;
     }
-    public static void updateProduct(Product selectedProduct) {
-        if(allProducts.contains(selectedProduct)) {
-            int productIdx = allProducts.indexOf(selectedProduct);
+
+    public static void updateProduct(Product oldProduct, Product selectedProduct) {
+        if(allProducts.contains(oldProduct)) {
+            int productIdx = allProducts.indexOf(oldProduct);
             allProducts.set(productIdx, selectedProduct);
         }
     }
-    public static void updatePart(Part selectedPart) {
-        if(allProducts.contains(selectedPart)) {
-            int partIdx = allParts.indexOf(selectedPart);
+    public static void updatePart(Part oldPart, Part selectedPart) {
+        if(allParts.contains(oldPart)) {
+            int partIdx = allParts.indexOf(oldPart);
             allParts.set(partIdx, selectedPart);
         }
     }
