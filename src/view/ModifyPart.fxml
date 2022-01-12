@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.modifyPartController">
+    <children>
+        <RadioButton fx:id="outSourced" layoutX="212.0" layoutY="30.0" mnemonicParsing="false" onAction="#outSourcedToggle" text="Outsourced">
+            <toggleGroup>
+                <ToggleGroup fx:id="tGroup" />
+            </toggleGroup></RadioButton>
+        <RadioButton fx:id="inHouse" layoutX="117.0" layoutY="30.0" mnemonicParsing="false" onAction="#inHouseToggle" selected="true" text="In-House" toggleGroup="$tGroup" />
+        <Label layoutX="29.0" layoutY="30.0" prefHeight="18.0" prefWidth="88.0" text="Add Part">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </Label>
+        <TextField fx:id="addPartID" disable="true" layoutX="157.0" layoutY="80.0" promptText="Auto Gen - Disabled" />
+        <TextField fx:id="addPartName" layoutX="157.0" layoutY="117.0" />
+        <TextField fx:id="addPartInv" layoutX="157.0" layoutY="159.0" />
+        <TextField fx:id="addPartCost" layoutX="157.0" layoutY="196.0" />
+        <TextField fx:id="addPartMax" layoutX="157.0" layoutY="236.0" />
+        <TextField fx:id="addPartChangeable" layoutX="157.0" layoutY="275.0" />
+        <TextField fx:id="addPartMin" layoutX="364.0" layoutY="236.0" />
+        <Label layoutX="45.0" layoutY="88.0" text="ID" />
+        <Label layoutX="45.0" layoutY="125.0" prefHeight="18.0" prefWidth="42.0" text="Name" />
+        <Label layoutX="45.0" layoutY="167.0" text="Inv" />
+        <Label layoutX="45.0" layoutY="203.0" prefHeight="18.0" prefWidth="42.0" text="Cost" />
+        <Label layoutX="45.0" layoutY="243.0" prefHeight="18.0" prefWidth="28.0" text="Max" />
+        <Label fx:id="labelChange" layoutX="45.0" layoutY="283.0" text="Machine ID" />
+        <Label layoutX="314.0" layoutY="240.0" text="Min" />
+        <Button layoutX="40.0" layoutY="352.0" mnemonicParsing="false" onAction="#savePart" text="Save" />
+        <Button layoutX="106.0" layoutY="352.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+    </children>
+</AnchorPane>

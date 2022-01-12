@@ -8,6 +8,8 @@ import java.util.Locale;
 public class Inventory {
     private static ObservableList<Product> allProducts = FXCollections.observableArrayList();
     private static ObservableList<Part> allParts = FXCollections.observableArrayList();
+    private static int PartID = 0;
+    private static int ProductID = 0;
 
     public static void addPart(Part partIdx) {
         if(partIdx != null) {
@@ -19,7 +21,6 @@ public class Inventory {
             allProducts.add(productIdx);
         }
     }
-
     public static boolean removeProduct(Product partSelected) {
         if(allProducts.contains(partSelected)) {
             allProducts.remove(partSelected);
@@ -34,12 +35,11 @@ public class Inventory {
         }
         return false;
     }
-
-    public static ObservableList<Part>  lookupPartID(int partIdx) {
+    public static ObservableList<Part>  lookupPartID(int PartID) {
         ObservableList partsResult = FXCollections.observableArrayList();
         if(!allParts.isEmpty()) {
           for(Part p: getAllParts()) {
-              if(p.getId() == partIdx) {
+              if(p.getId() == PartID) {
                   partsResult.add(p);
               }
           }
@@ -59,7 +59,6 @@ public class Inventory {
         }
         return null;
     }
-
     public static ObservableList<Product>  lookupProductID(int productIdx) {
         ObservableList productResult = FXCollections.observableArrayList();
         if(!allProducts.isEmpty()) {
@@ -84,7 +83,12 @@ public class Inventory {
         }
         return null;
     }
-
+    public static int generatePartID() {
+        return ++PartID;
+    }
+    public static int generateProductID() {
+        return ++ProductID;
+    }
     public static void updateProduct(Product selectedProduct) {
         if(allProducts.contains(selectedProduct)) {
             int productIdx = allProducts.indexOf(selectedProduct);
@@ -97,11 +101,9 @@ public class Inventory {
             allParts.set(partIdx, selectedPart);
         }
     }
-
     public static ObservableList<Part> getAllParts() {
         return allParts;
     }
-
     public static ObservableList<Product> getAllProducts() {
         return allProducts;
     }

@@ -17,6 +17,8 @@ public abstract class Part {
     public Part() {
 
     }
+
+
     public Part(int id, String name, double price, int stock, int min, int max) {
         this.id = id;
         this.name = name;

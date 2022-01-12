@@ -1,27 +1,20 @@
 package model;
 
 public class InHousePart extends Part {
-    private int id;
+    private int machineID;
+    public InHousePart(int id, String name, double price, int stock, int min, int max, int machineID) {
+        super(id, name, price, stock, min, max);
 
-    public InHousePart(int id, String name, double price, int stock, int min, int max) {
-        setId(id);
-        setName(name);
-        setPrice(price);
-        setStock(stock);
-        setMin(min);
-        setMax(max);
+        this.machineID = machineID;
+
     }
-    /**
-     * Create Getter
-     */
-    public int getId() {
-        return id;
+    //CREATE GETTERS
+    public int getMachineID() {
+        return machineID;
     }
-    /**
-     * Create Setter
-     */
-    public void setId(int id) {
-        this.id = id;
+    //CREATE SETTERS
+    public void setMachineID(int machineID) {
+        this.machineID = machineID;
     }
 
 }
