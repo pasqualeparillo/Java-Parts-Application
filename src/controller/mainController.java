@@ -21,18 +21,19 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-
+/**
+ * Main controller used to render the initial screen & render the initial parts/products
+ */
 public class mainController implements Initializable {
-
-    //PARTS TABLE
+    /**
+     * Set the FXML tables & fields
+     */
     @FXML private TextField partSearch;
     @FXML private TableView<Part> partTableView;
     @FXML private TableColumn<Part, Integer> partIDColumn;
     @FXML private TableColumn<Part, String> partNameColumn;
     @FXML private TableColumn<Part, Integer> partInventoryColumn;
     @FXML private TableColumn<Part, Double> partPriceColumn;
-
-    //PRODUCT TABLE
     @FXML private TextField productSearch;
     @FXML private TableView<Product> productTableView;
     @FXML private TableColumn<Product, Integer> productIDColumn;
@@ -40,12 +41,13 @@ public class mainController implements Initializable {
     @FXML private TableColumn<Product, Integer> productInventoryColumn;
     @FXML private TableColumn<Product, Double> productPriceColumn;
 
-    //VARIABLES FOR METHODS
     private static Part modifyPartIdx;
     private static Product modifyProductIdx;
     private static String fxmlPath;
-
-    //START DELETE METHODS
+    /**
+     * Confirms the user would like to delete the selected Part, checks if they have a Part selected
+     * @param event - triggered from on click button event
+     */
     public void confirmDeletePartModal(ActionEvent event) {
         Part selectedPart = partTableView.getSelectionModel().getSelectedItem();
         if(selectedPart != null) {
@@ -68,7 +70,12 @@ public class mainController implements Initializable {
             alertConfirm.showAndWait();
         }
     }
-
+    //
+    /**
+     * FUTURE ENHANCEMENT I believe the way I'm handling errors can be done much better. Maybe extract it to its own class
+     * Confirms the user would like to delete the selected Product, checks if they have a Product selected
+     * @param event - triggered from on click button event
+     */
     public void confirmDeleteProductModal(ActionEvent event) {
         Product selectedProduct = productTableView.getSelectionModel().getSelectedItem();
         if(selectedProduct != null && selectedProduct.getAssociatedParts().isEmpty()) {
@@ -96,40 +103,50 @@ public class mainController implements Initializable {
             alertConfirm.showAndWait();
         }
     }
-    //END DELETE METHODS
-
-    //START ADD METHODS
+    /**
+     * Switch's user to the add Product page
+     * @param actionEvent - triggered from on click button event
+     */
     @FXML
     public void addProduct(ActionEvent actionEvent) throws IOException {
         fxmlPath = "/view/AddProduct.fxml";
-        switchScene(actionEvent);
+        switchScene(actionEvent, "Add Product");
     }
+    /**
+     * Switch's user to the add Part page
+     * @param actionEvent - triggered from on click button event
+     */
     @FXML
     public void addPart(ActionEvent actionEvent) throws IOException {
         fxmlPath = "/view/AddPart.fxml";
-        switchScene(actionEvent);
+        switchScene(actionEvent, "Add Part");
     }
-    //END ADD METHODS
-
-    //START MODIFY METHODS
+    /**
+     * Switch's user to the modify Product page
+     * @param actionEvent - triggered from on click button event
+     */
     @FXML
     public void modifyProduct(ActionEvent actionEvent) throws IOException {
         modifyProductIdx = productTableView.getSelectionModel().getSelectedItem();
         if(modifyProductIdx != null) {
             fxmlPath = "/view/ModifyProduct.fxml";
-            switchScene(actionEvent);
+            switchScene(actionEvent, "Modify Product");
         } else {
             Alert alertConfirm = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.OK);
             alertConfirm.setTitle("You need to select a product");
             alertConfirm.showAndWait();
         }
     }
+    /**
+     * Switch's user to the modify Part page
+     * @param actionEvent - triggered from on click button event
+     */
     @FXML
     public void modifyPart(ActionEvent actionEvent) throws IOException {
         modifyPartIdx = partTableView.getSelectionModel().getSelectedItem();
         if(modifyPartIdx != null) {
             fxmlPath = "/view/ModifyPart.fxml";
-            switchScene(actionEvent);
+            switchScene(actionEvent, "Modify Part");
         } else {
             Alert alertConfirm = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.OK);
             alertConfirm.setTitle("You need to select a part");
@@ -137,15 +154,23 @@ public class mainController implements Initializable {
         }
 
     }
+    /**
+     * Gets & returns the Product you want ot modify
+     */
     public static Product getProductToModify() {
         return modifyProductIdx;
     }
+    /**
+     * Gets & returns the Part you want ot modify
+     */
     public static Part getPartToModify() {
         return modifyPartIdx;
     }
-    //END MODIFY METHODS
 
-    //START SEARCH METHODS
+    /**
+     * Search method - if search is not null search for a part || if it is null return all parts calls searchForPart & pass's value
+     * @param event - triggered via a keypress event.
+     */
     @FXML
     private void searchForPart(KeyEvent event) {
         if(partSearch.getText() != null) {
@@ -156,6 +181,10 @@ public class mainController implements Initializable {
             }
         }
     }
+    /**
+     * Search method - checks if search value is an int or string -> calls search methods for either depending. Returns result
+     * @param search - string or integer you would like to search for
+     */
     private ObservableList<Part> searchForPart(String search) {
         ObservableList<Part> foundParts = FXCollections.observableArrayList();
         try {
@@ -169,6 +198,10 @@ public class mainController implements Initializable {
         }
         return foundParts;
     }
+    /**
+     * Search method - if search is not null search for a Product || if it is null return all Product's calls searchForPart & pass's value
+     * @param event - triggered via a keypress event.
+     */
     @FXML
     private void searchForProduct(KeyEvent event) {
         if(productSearch.getText() != null) {
@@ -179,6 +212,10 @@ public class mainController implements Initializable {
             }
         }
     }
+    /**
+     * Search method - checks if search value is an int or string -> calls search methods for either depending. Returns result
+     * @param search - string or integer you would like to search for
+     */
     private ObservableList<Product> searchForProduct(String search) {
         ObservableList<Product> foundProducts = FXCollections.observableArrayList();
         try {
@@ -192,8 +229,11 @@ public class mainController implements Initializable {
         }
         return foundProducts;
     }
-    //END SEARCH METHODS
-
+    /**
+     * Sets & renders the initial list views
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         partTableView.setItems(Inventory.getAllParts());
@@ -207,20 +247,26 @@ public class mainController implements Initializable {
         productInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         productPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
-
-    //HELPER FUNCTIONS
-    public void switchScene(ActionEvent event)  {
+    /**
+     * Helper function used in programs to close a scene and open another
+     * @param event - an event handler passed to change scene
+     */
+    public void switchScene(ActionEvent event, String title)  {
         try {
             Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
-            stage.setTitle("Main Page");
+            stage.setTitle(title);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    /**
+     * Helper function used to check if a value is an integer or not
+     * @param searchQuery - an event handler passed to change scene
+     */
     public boolean isInt(String searchQuery) {
         try {
             Integer.parseInt(searchQuery);
@@ -229,12 +275,20 @@ public class mainController implements Initializable {
             return false;
         }
     }
+    /**
+     * Helper function used to clear the default text that was left in a search box
+     * @param event - an event handler passed clear the text on click
+     */
     @FXML
     void resetText(MouseEvent event) {
         Object source = event.getSource();
         TextField field = (TextField) source;
         field.setText("");
     }
+    /**
+     * Helper function used to exit the program
+     * @param actionEvent - an event handler passed
+     */
     @FXML
     public void exitProgram(ActionEvent actionEvent) {
         System.exit(0);

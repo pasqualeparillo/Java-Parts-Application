@@ -19,8 +19,17 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Add part controller used to create a new part
+ */
 public class addPartController {
+    /**
+     * generate a new ID.
+     */
     int idx = Inventory.generatePartID();
+    /**
+     * set FXML fields for use in methods
+     */
     @FXML private TextField addPartName;
     @FXML private TextField addPartInv;
     @FXML private TextField addPartCost;
@@ -33,14 +42,28 @@ public class addPartController {
 
     private String fxmlPath;
 
+    /**
+     * toggles radio buttons if outsourced is checked
+     */
     @FXML
     void outSourcedToggle() {
         labelChange.setText("Company Name");
     }
+    /**
+     * toggles radio buttons if inhouse is checked
+     */
     @FXML
     void inHouseToggle() {
         labelChange.setText("Machine ID");
     }
+
+
+    /**
+     * RUNTIME ERROR before I was setting the values above the try causing the program to behave unpredictably & return an error
+     * FUTURE ENHANCEMENT I believe there must be a better way to handle this without nested try/catch & if statements. Should revisit in the future
+     * used to save a part, checks that min !> max & partmin < partmax
+     * @param event - action event triggering a save on click
+     */
     @FXML
     void savePart(ActionEvent event) {
         try {
@@ -58,8 +81,6 @@ public class addPartController {
                 generateError("invError");
             } else {
                 if(inHouse.isSelected()) {
-                    //generate in-house part
-                    //was going to do if else but this handles if it's a string without unnecessary chaining.
                     try {
                         int partMachineID = Integer.parseInt(addPartChangeable.getText());
                         InHousePart inHousePart = new InHousePart(id, partName, partPrice, partInv, partMin, partMax, partMachineID);
@@ -81,9 +102,11 @@ public class addPartController {
         } catch (Exception e) {
             generateError("emptyError");
         }
-
     }
-    //ERROR HANDLING
+    /**
+     * Error handling method returning a modal from switch statement cases
+     * @param errorType - the error type you would like to set e.g. "emptyError"
+     */
     private void generateError(String errorType) {
         String errorHeader = "";
         String errorContent = "";
@@ -116,6 +139,11 @@ public class addPartController {
         }
 
     }
+    /**
+     * Used to generate an error
+     * @param errorHeader - the header text you would like to set
+     * @param errorContent - to error content you would like to set
+     */
     private void returnError(String errorHeader, String errorContent) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         String errorTitle = "Error";
@@ -124,12 +152,19 @@ public class addPartController {
         alert.setContentText(errorContent);
         alert.showAndWait();
     }
-    //HELPER FUNCTION
+    /**
+     * Helper function used to send program back to home scene
+     * @param event -  an event handler passed to change scene
+     */
     @FXML
     public void returnToHome(ActionEvent event) {
         fxmlPath = "/view/MainScene.fxml";
         switchScene(event);
     }
+    /**
+     * Helper function used pop up a cancel modal and send back to home screen
+     * @param event - an event handler passed to change scene
+     */
     @FXML
     public void cancel(ActionEvent event) throws IOException {
         Alert alertConfirm = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.OK);
@@ -141,12 +176,16 @@ public class addPartController {
             switchScene(event);
         }
     }
+    /**
+     * Helper function used in programs to close a scene and open another
+     * @param event - an event handler passed to change scene
+     */
     public void switchScene(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
-            stage.setTitle("Main Page");
+            stage.setTitle("Inventory Application");
             stage.setScene(scene);
             stage.show();
 

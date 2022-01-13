@@ -20,12 +20,16 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Modify Part controller used to modify parts
+ */
 public class modifyPartController implements Initializable {
     //used to pass data between controllers
     public Part selectedPart;
-
     private String fxmlPath;
-
+    /**
+     * set FXML fields
+     */
     @FXML private TextField addPartID;
     @FXML private TextField addPartName;
     @FXML private TextField addPartInv;
@@ -37,18 +41,28 @@ public class modifyPartController implements Initializable {
     @FXML private TextField addPartChangeable;
     @FXML private Label labelChange;
 
+    /**
+     * sets toggle button if outsourced is checked
+     */
     @FXML
     void outSourcedToggle() {
         labelChange.setText("Company Name");
         addPartChangeable.clear();
     }
+    /**
+     * sets toggle button if in house is checked
+     */
     @FXML
     void inHouseToggle() {
         labelChange.setText("Machine ID");
         addPartChangeable.clear();
     }
 
-
+    /**
+     * Sets & renders the initial list views
+     * @param url
+     * @param resourceBundle
+     */
     public void initialize(URL url, ResourceBundle resourceBundle) {
         selectedPart = mainController.getPartToModify();
         addPartID.getText();
@@ -73,7 +87,10 @@ public class modifyPartController implements Initializable {
             addPartChangeable.setText(companyName);
         }
     }
-
+    /**
+     * Saves the updated part
+     * @param event - action event fired from on click
+     */
     @FXML
     public void savePart(ActionEvent event){
         int id = selectedPart.getId();
@@ -116,7 +133,10 @@ public class modifyPartController implements Initializable {
         }
     }
 
-    //ERROR HANDLING
+    /**
+     * Error handling method returning a modal from switch statement cases
+     * @param errorType - the error type you would like to set e.g. "emptyError"
+     */
     private void generateError(String errorType) {
         String errorHeader = "";
         String errorContent = "";
@@ -149,6 +169,11 @@ public class modifyPartController implements Initializable {
         }
 
     }
+    /**
+     * Used to generate an error
+     * @param errorHeader - the header text you would like to set
+     * @param errorContent - to error content you would like to set
+     */
     private void returnError(String errorHeader, String errorContent) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         String errorTitle = "Error";
@@ -157,12 +182,19 @@ public class modifyPartController implements Initializable {
         alert.setContentText(errorContent);
         alert.showAndWait();
     }
-    //HELPER METHODS
+    /**
+     * Helper function used to send program back to home scene
+     * @param event -  an event handler passed to change scene
+     */
     @FXML
     public void returnToHome(ActionEvent event) {
         fxmlPath = "/view/MainScene.fxml";
         switchScene(event);
     }
+    /**
+     * Helper function used pop up a cancel modal and send back to home screen
+     * @param event - an event handler passed to change scene
+     */
     @FXML
     public void cancel(ActionEvent event) throws IOException {
         Alert alertConfirm = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.OK);
@@ -174,6 +206,10 @@ public class modifyPartController implements Initializable {
             switchScene(event);
         }
     }
+    /**
+     * Helper function used in programs to close a scene and open another
+     * @param event - an event handler passed to change scene
+     */
     public void switchScene(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlPath)));

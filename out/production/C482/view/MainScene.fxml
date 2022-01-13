@@ -54,7 +54,7 @@
                 <TextField fx:id="partSearch" layoutX="177.0" layoutY="40.0" onKeyTyped="#searchForPart" onMouseClicked="#resetText" prefHeight="26.0" prefWidth="198.0" promptText="Search by part ID or Name" />
             </children>
         </AnchorPane>
-        <Button layoutX="949.0" layoutY="380.0" mnemonicParsing="false" text="Exit" />
+        <Button layoutX="949.0" layoutY="380.0" mnemonicParsing="false" onAction="#exitProgram" text="Exit" />
     </children>
     <padding>
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

@@ -24,11 +24,16 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Modify Product controller used to modify parts
+ */
 public class modifyProductController implements Initializable {
     private String fxmlPath;
     public Product selectedProduct;
+    /**
+     * set FXML fields
+     */
     private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
-
     @FXML private TextField productID;
     @FXML private TextField productName;
     @FXML private TextField productMax;
@@ -47,7 +52,11 @@ public class modifyProductController implements Initializable {
     @FXML private TableColumn<Part, Integer> partStock;
     @FXML private TableColumn<Part, Integer> partID;
     @FXML private TableView<Part> partsTableView;
-
+    /**
+     * Sets & renders the initial list views and set text fields
+     * @param url
+     * @param resourceBundle
+     */
     public void initialize(URL url, ResourceBundle resourceBundle) {
         selectedProduct = mainController.getProductToModify();
         associatedParts = selectedProduct.getAssociatedParts();
@@ -71,6 +80,10 @@ public class modifyProductController implements Initializable {
         assPartStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
         assPartPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
+    /**
+     * Saves the updated Product
+     * @param event - action event fired from on click
+     */
     @FXML
     public void updateProduct(ActionEvent event) throws IOException {
        try {
@@ -98,6 +111,9 @@ public class modifyProductController implements Initializable {
 
        }
     }
+    /**
+     * Add's associated parts to products
+     */
     @FXML
     public void addToAssPart() {
         Part assPart = partsTableView.getSelectionModel().getSelectedItem();
@@ -110,6 +126,9 @@ public class modifyProductController implements Initializable {
             generateError("partError");
         }
     }
+    /**
+     * removes associated parts to products
+     */
     @FXML
     public void removeFromAssPart() {
         Part assPart = assPartView.getSelectionModel().getSelectedItem();
@@ -122,9 +141,12 @@ public class modifyProductController implements Initializable {
             generateError("assPartError");
         }
     }
-    //SEARCH
+    /**
+     * If search doesn't equal null search for a part || if it is null return all parts
+     */
     @FXML
     private void searchForPart(KeyEvent event) {
+
         if(partSearch.getText() != null) {
             if (!partSearch.getText().trim().isEmpty()) {
                 partsTableView.setItems(searchForPart(partSearch.getText()));
@@ -133,6 +155,10 @@ public class modifyProductController implements Initializable {
             }
         }
     }
+    /**
+     * Search method - checks if search value is an int or string -> calls search methods for either depending. Returns result
+     * @param search - string or integer you would like to search for
+     */
     private ObservableList<Part> searchForPart(String search) {
         ObservableList<Part> foundParts = FXCollections.observableArrayList();
         try {
@@ -146,8 +172,12 @@ public class modifyProductController implements Initializable {
         }
         return foundParts;
     }
-    //ERROR HANDLING
+    /**
+     * Search method - checks if search value is an int or string -> calls search methods for either depending. Returns result
+     * @param errorType - string or integer you would like to search for
+     */
     private void generateError(String errorType) {
+        //DYNAMIC ERROR HANDLING, RETURNS A MODAL BASED ON THE TYPE OF ERROR WE PASS TO IT
         String errorHeader = "";
         String errorContent = "";
         String type = "";
@@ -203,6 +233,11 @@ public class modifyProductController implements Initializable {
         }
 
     }
+    /**
+     * Used to generate an error
+     * @param errorHeader - the header text you would like to set
+     * @param errorContent - to error content you would like to set
+     */
     private void returnError(String errorHeader, String errorContent, String type) {
         if(type == "CONFIRMATION") {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -222,7 +257,10 @@ public class modifyProductController implements Initializable {
         }
 
     }
-    //HELPER METHODS
+    /**
+     * Helper function used to check if a value is an integer or not
+     * @param searchQuery - an event handler passed to change scene
+     */
     public boolean isInt(String searchQuery) {
         try {
             Integer.parseInt(searchQuery);
@@ -231,11 +269,19 @@ public class modifyProductController implements Initializable {
             return false;
         }
     }
+    /**
+     * Helper function used to send program back to home scene
+     * @param event -  an event handler passed to change scene
+     */
     @FXML
     public void returnToHome(ActionEvent event) {
         fxmlPath = "/view/MainScene.fxml";
         switchScene(event);
     }
+    /**
+     * Helper function used pop up a cancel modal and send back to home screen
+     * @param event - an event handler passed to change scene
+     */
     @FXML
     public void cancel(ActionEvent event) throws IOException {
         Alert alertConfirm = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.OK);
@@ -247,12 +293,16 @@ public class modifyProductController implements Initializable {
             switchScene(event);
         }
     }
+    /**
+     * Helper function used in programs to close a scene and open another
+     * @param event - an event handler passed to change scene
+     */
     public void switchScene(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlPath)));
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
-            stage.setTitle("Main Page");
+            stage.setTitle("Inventory Application");
             stage.setScene(scene);
             stage.show();
 

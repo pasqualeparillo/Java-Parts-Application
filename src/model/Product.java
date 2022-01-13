@@ -2,6 +2,9 @@ package model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/**
+ * Product Model
+ */
 public class Product {
     private int id;
     private String name;
@@ -21,32 +24,44 @@ public class Product {
     }
 
     /**
-     * Start Create Setters
+     * Sets the ID
      */
     public void setID(int id) {
         this.id = id;
     }
-
+    /**
+     * Sets the price
+     */
     public void setPrice(double price) {
         this.price = price;
     }
-
+    /**
+     * Sets the name
+     */
     public void setName(String name) {
         this.name = name;
     }
-
+    /**
+     * Sets the stock
+     */
     public void setStock(int stock) {
         this.stock = stock;
     }
-
+    /**
+     * Sets the min value
+     */
     public void setMin(int min) {
         this.min = min;
     }
-
+    /**
+     * Sets the max value
+     */
     public void setMax(int max) {
         this.max = max;
     }
-
+    /**
+     * Sets the associated parts.
+     */
     public void setAssociatedParts(Part part){associatedParts.add(part);}
     /**
      * End Create Setters

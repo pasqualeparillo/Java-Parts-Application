@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * OutSourcedPart model
+ */
 public class OutSourcedPart extends Part {
     private String companyName;
 
@@ -8,13 +11,13 @@ public class OutSourcedPart extends Part {
         this.companyName = companyName;
     }
     /**
-     * Create Getter
+     * Create Getter - return company name
      */
     public String getCompanyName() {
         return companyName;
     }
     /**
-     * Create Setter
+     * Create Setter - sets the company name
      */
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
